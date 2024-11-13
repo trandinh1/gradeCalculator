@@ -28,11 +28,8 @@ int main()
       cout << "What percentage is the " << gradeCategories[i] << " category worth? (Type in decimal form): ";
       cin >> weight[i];
       totalWeight += weight[i]; 
-
-          if((totalWeight <= 1.0 && totalWeight >= 0.0) && (weight[i] > 0)) {
-            totalWeight;
-          }
-          else {
+          //check for valid weight
+          if((totalWeight > 1.0 && totalWeight < 0.0) && (weight[i] < 0)) {
             totalWeight -= weight [i];
             cout << "Try Again! What percentage is the " << gradeCategories [i]<< " category worth? (Type in decimal form): ";
             cin >> weight[i];   
@@ -40,7 +37,7 @@ int main()
           }
       
 
-
+      
       cout << "Enter the number of scores: ";
       cin >> numScores;
       totalScore = 0;
