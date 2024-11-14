@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <cmath> 
 
@@ -7,7 +8,7 @@ using namespace std;
 
 int main()
 {
-  double totalGrade = 0, score = 0, totalScore = 0; 
+  double totalGrade = 0, score = 0, totalScore = 0, outOf = 0, totalOutOf = 0; 
   string gradeCategories [100];
   double weight [100];
   double totalWeight = 0;
@@ -33,30 +34,49 @@ int main()
             totalWeight -= weight [i];
             cout << "Try Again! What percentage is the " << gradeCategories [i]<< " category worth? (Type in decimal form): ";
             cin >> weight[i];   
+            while((totalWeight > 1.0 && totalWeight < 0.0) && (weight[i] < 0)){
+              cout << "Try Again! What percentage is the " << gradeCategories [i]<< " category worth? (Type in decimal form): ";
+              cin >> weight[i];   
+            }
             totalWeight += weight[i]; 
           }
       
 
-      
+
       cout << "Enter the number of scores: ";
       cin >> numScores;
-      totalScore = 0;
+      
+      
     
         for(int j = 0; j < numScores; j++){
             cout << "Enter your score for " << gradeCategories[i] << " category: ";
-              cin >> score;
-              if (score <= 100.0 && score >= 0.0){
+              cin >> score; 
+              cout << "Out of ";
+              cin >> outOf;
+              if (score >= 0.0 && outOf > 0){
               totalScore += score; 
+              totalOutOf += outOf;
               }
+          
               else {
-              cout << "Try again: Enter your score for " << gradeCategories[i] << " category: ";
-              cin >> score;
+                cout << "Try again: Enter your score for " << gradeCategories[i] << " category: ";
+                cin >> score;
+                cout << "Out of ";
+                cin >> outOf;
+              while (score < 0 || outOf <= 0)
+              {
+                cout << "Try again: Enter your score for " << gradeCategories[i] << " category: ";
+                cin >> score;
+                cout << "Out of ";
+                cin >> outOf;
+              }
               totalScore += score;
+              totalOutOf += outOf; 
               }
             
         }
         
-        totalGrade += ((totalScore/numScores) * weight[i]);
+        totalGrade += ((totalScore/totalOutOf) * weight[i]);
   }
 
 // Check the corresponding letter grade to the percentage grade (Ex. 90% = is A-)
@@ -84,7 +104,9 @@ if (totalGrade >= 93.0 && totalGrade <= 100.0) {
 }else {
   letterGrade = "F";
 }
-cout << "Grade Percentage: " << totalGrade << "%"<<endl; 
+
+
+cout << fixed << setprecision(2) << "Grade Percentage: " << totalGrade << "%"<<endl; 
 cout << "Letter Grade: " << letterGrade << endl;
   
     
